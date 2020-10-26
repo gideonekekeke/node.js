@@ -1,67 +1,47 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const router = express.Router()
-
-const DBschema = require('../schemadata/Databaseschema')
-
+const shemaDB = require('../schemadata/Databaseschema')
 
 
 
-router.get('/',async(req, res)=>{
-  try{
-    const news = await DBschema.find()
-     res.status(200).json(news)
 
-  }catch(err){
-    res.status(400).send("Error" + err)
+
+router.get('/', async(req, res)=>{
+  try {
+    const files = await shemaDB.find()
+    res.status(200).json(files)
+  
+
+  }
+  catch (err){
+    res.status(400).json('error' + err)
   }
 })
 
-router.get('/:id',async(req, res)=>{
-  try{
-    const news = await DBschema.findById(req.params.id)
-     res.status(200).json(news)
+
+router.get('/:id', async(req, res)=>{
+ try{
+  const files = await shemaDB.findById(req.params.id)
+  res.status(200).json(files)
 
   }catch(err){
-    res.status(400).send("Error" + err)
+    res.json(files)
   }
 })
+
 
 
 router.post('/', async(req, res)=>{
-  const incoming = new DBschema({
+  const newpost = new shemaDB({
     name : req.body.name,
-    age: req.body.age,
-    email: req.body.email,
+    email : req.body.email
   })
   try {
-    const data = await incoming.save()
-    res.status(200).json(data)
-
-  }catch(error){
-    res.status(400).send('Error' + err)
-
+  const file = await newpost.save()
+  res.status(201).json(file)
   }
-})
-
-router.patch('/',async(req, res)=>{
-  try{
-    const news = await DBschema.find()
-     res.status(200).json(news)
-
-  }catch(err){
-    res.status(400).send("Error" + err)
-  }
-})
-
-
-router.delete('/',async(req, res)=>{
-  try{
-    const news = await DBschema.find()
-     res.status(200).json(news)
-
-  }catch(err){
-    res.status(400).send("Error" + err)
+  catch (err){
+    res.status(404).json('Error' + err)
   }
 })
 
@@ -69,15 +49,4 @@ router.delete('/',async(req, res)=>{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-module.exports = router;
+module.exports =router;

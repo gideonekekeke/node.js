@@ -2,27 +2,24 @@ const mongoose = require('mongoose');
 
 
 
-//create the dataschema
-const createschema =new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        default : "samuel"
 
-    },
 
-    age : {
-        type: Number,
-        required : true,
-        default : 18
-    },
+const baseschema  = new mongoose.Schema({
+name : {
+    type: String,
+    required: true,
+},
 
-    email : {
-       type: String,
-       required : true,
-       default : "@gmail.com"
-
+email :{
+    type: String,
+    required: true,
 }
+
+
+
+
+
+
 
 
 
@@ -31,7 +28,4 @@ const createschema =new mongoose.Schema({
 
 
 
-
-
-
-module.exports = mongoose.model('schema',createschema)
+module.exports = mongoose.model('shema',baseschema)
